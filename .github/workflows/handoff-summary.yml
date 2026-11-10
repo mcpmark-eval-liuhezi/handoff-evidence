@@ -1,0 +1,24 @@
+name: handoff-summary
+
+on:
+  workflow_dispatch:
+
+jobs:
+  generate-handoff-summary:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Write short log
+        run: |
+          {
+            echo "# Release handover summary"
+            echo "Generated: $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+            echo "Purpose: Release handover evidence for GitHub handover doc."
+            echo "Workflow: manual dispatch (workflow_dispatch)"
+            echo "Artifact: handoff-summary"
+          } > handoff.log
+
+      - name: Upload handoff summary log
+        uses: actions/upload-artifact@v4
+        with:
+          name: handoff-summary
+          path: handoff.log
